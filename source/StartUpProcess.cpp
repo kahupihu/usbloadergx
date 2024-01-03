@@ -149,7 +149,13 @@ int StartUpProcess::ParseArguments(int argc, char *argv[])
 			{
 				Settings.SDMode = LIMIT(atoi(ptr + strlen("-sdmode=")), 0, 1);
 				if (Settings.SDMode)
+					{
+						sdhc_mode_sd = 1;
+					}
+				else
+				{
 					sdhc_mode_sd = 1;
+				}
 			}
 		}
 
@@ -236,7 +242,15 @@ bool StartUpProcess::USBSpinUp()
 		}
 
 		if (cancelBtn->GetState() == STATE_CLICKED)
+		{
 			break;
+		}
+		else
+		{
+			Settings.SDMode = ON;
+			sdhc_mode_sd = 1;
+			break;
+		}
 
 		if (sdmodeBtn->GetState() == STATE_CLICKED)
 		{
@@ -244,11 +258,17 @@ bool StartUpProcess::USBSpinUp()
 			sdhc_mode_sd = 1;
 			break;
 		}
+		else
+		{
+			Settings.SDMode = ON;
+			sdhc_mode_sd = 1;
+			break;
+		}
 
-		messageTxt->SetTextf("Waiting for HDD: %i sec left\n", 20 - (int)countDown.elapsed());
+		messageTxt->SetTextf("Waiting for HDD: %i sec left\n", 1 - (int)countDown.elapsed());
 		Draw();
 		usleep(50000);
-	} while (countDown.elapsed() < 20.f);
+	} while (countDown.elapsed() < 1.f);
 
 	drawCancel = false;
 
