@@ -1136,7 +1136,7 @@ int DiscWait(const char *title, const char *msg, const char *btn1Label, const ch
 
 	if (IsDeviceWait)
 	{
-		time_t starttime = time(30);
+		time_t starttime = time(0);
 		time_t timenow = starttime;
 		do
 		{
@@ -1157,7 +1157,7 @@ int DiscWait(const char *title, const char *msg, const char *btn1Label, const ch
 			}
 			timenow = time(0);
 		}
-		while (timenow-starttime < 30);
+		while (timenow-starttime < 0);
 	}
 	else
 	{
